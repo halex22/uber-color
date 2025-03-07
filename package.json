@@ -1,10 +1,14 @@
 {
   "name": "uber-color",
   "version": "1.0.0",
-  "description": "",
+  "description": "Uber Color uses a Class named UColor to generate color palettes, contract colors, grayScale from a rgb color",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/halex22/uber-color.git"
   },
   "author": "acca-alex-22",
   "license": "ISC",

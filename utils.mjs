@@ -32,7 +32,7 @@ export function randomAlpha () {
  * @param {number} blue 
  * @returns 
  */
-export function rgbToHsl (red, green, blue) {
+export function rgbToHsl (r, g, b) {
   r /= 255;
   g /= 255;
   b /= 255;
@@ -71,7 +71,7 @@ export function rgbToHsl (red, green, blue) {
  * values calculated from the input HSL (Hue, Saturation, Luminosity) values. The array contains the
  * red, green, and blue values respectively.
  */
-export function hslToRgb (hue, saturate, luminosity) {
+export function hslToRgb (h, s, l) {
   s /= 100;
   l /= 100;
   const k = (n) => (n + h / 30) % 12;

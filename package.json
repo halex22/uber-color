@@ -1,0 +1,15 @@
+{
+  "name": "uber-color",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "acca-alex-22",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "jsdoc": "^4.0.4"
+  }
+}

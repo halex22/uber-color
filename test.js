@@ -1,33 +1,31 @@
- const rgbToHsl = (r, g, b) => {
-  r /= 255;
-  g /= 255;
-  b /= 255;
-  const l = Math.max(r, g, b);
-  const s = l - Math.min(r, g, b);
-  const h = s
-    ? l === r
-      ? (g - b) / s
-      : l === g
-      ? 2 + (b - r) / s
-      : 4 + (r - g) / s
-    : 0;
-  return [
-    Math.round(60 * h < 0 ? 60 * h + 360 : 60 * h),
-    Math.round(100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0)),
-    Math.round((100 * (2 * l - s)) / 2),
-  ];
-};
+const bohColor = UColor.fromHexCode("#ff3400");
+console.log(bohColor);
 
-const hslToRgb = (h, s, l) => {
-  s /= 100;
-  l /= 100;
-  const k = n => (n + h / 30) % 12;
-  const a = s * Math.min(l, 1 - l);
-  const f = n =>
-    l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
-  return [Math.round(255 * f(0)), Math.round(255 * f(8)), Math.round(255 * f(4))];
-};
+// const uColor1 = new UColor()
+// const uColor2 = UColor.fromHexCode('#ff3400')
+// const uColor3 = UColor.random()
+// console.log(uColor3)
+// const uColor4 = UColor.fromRGB('rgba(255,61,12,0.5)')
+// const uColor4Hex = UColor.
+// #ff3d0c80
+// const uColor4 = UColor.fromRGB('rgba(5,21,12,0.98)')
+// console.log(uColor4.toRGB())
+// const uColor5 = UColor.fromRGB('rgb(255,61,12)')
+// const uColor6=  UColor.fromRGB('rgb(12, 255, 89)')
+// console.log(uColor4.toHex())
+// const uColor7 = uColor4.getGrayColor()
+// console.log(uColor7.toRGB());
 
+// console.log(uColor2.toHex()) // #ff3400
+// console.log(uColor2.toHex()) // rgba(255,52,0,1)
+// console.log(uColor2.getContrastColor())
+// console.log(uColor2.getPalette())
+// rgb(255, 10, 177)
+
+const greenColor = new UColor(12, 255, 89)
+const contrastedGreenColor = greenColor.getContrastColor()
+console.log(greenColor)
+console.log(contrastedGreenColor)
 
 
 // for (let index = 0; index < 1000; index++) {
@@ -36,7 +34,3 @@ const hslToRgb = (h, s, l) => {
   
 // }
 
-
-console.log(rgbToHsl(12, 255, 89))
-
-console.log(hslToRgb(139.01234567901236, 100, 52.352941176470594 ))

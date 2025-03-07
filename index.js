@@ -1,53 +1,22 @@
-const MIN_COLOR = 0;
-const MAX_COLOR = 255;
-const randomBetween = () =>
-  MIN_COLOR + Math.floor(Math.random() * (MAX_COLOR - MIN_COLOR + 1));
-const randomAlpha = () => Math.round(Math.random() * 100) / 100;
-
-const rgbToHsl = (r, g, b) => {
-  r /= 255;
-  g /= 255;
-  b /= 255;
-  const l = Math.max(r, g, b);
-  const s = l - Math.min(r, g, b);
-  const h = s
-    ? l === r
-      ? (g - b) / s
-      : l === g
-      ? 2 + (b - r) / s
-      : 4 + (r - g) / s
-    : 0;
-  return [
-    Math.round(60 * h < 0 ? 60 * h + 360 : 60 * h),
-    Math.round(
-      100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0)
-    ),
-    Math.round((100 * (2 * l - s)) / 2),
-  ];
-};
-
-const hslToRgb = (h, s, l) => {
-  s /= 100;
-  l /= 100;
-  const k = (n) => (n + h / 30) % 12;
-  const a = s * Math.min(l, 1 - l);
-  const f = (n) =>
-    l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
-  return [
-    Math.round(255 * f(0)),
-    Math.round(255 * f(8)),
-    Math.round(255 * f(4)),
-  ];
-};
+import { hslToRgb, rgbToHsl, randomAlpha, randomBetween } from "./utils.mjs";
 
 
-class UColor {
+/* The `UColor` class in JavaScript provides methods for handling RGB and RGBA color values, including
+conversion between different color formats, generating random colors, calculating grayscale values,
+creating color palettes, and determining contrasting colors. */
+export default class UColor {
+
   /**
-   *
-   * @param {number} r
-   * @param {number} g
-   * @param {number} b
-   * @param {number} a
+   * The constructor function initializes an object with RGB color values and an optional alpha value.
+   * @param {number} r - The parameter `r` represents the red component of a color in the RGB color model.
+   * @param {number} g - The parameter `g` in the constructor function represents the green component of a color
+   * in RGB (Red, Green, Blue) format. It is used to define the intensity of the green color in the
+   * overall color.
+   * @param {number} b - The parameter `b` in the constructor function represents the blue component of a color
+   * in RGB (Red, Green, Blue) color model. It is used to define the intensity of the blue color in the
+   * color being created.
+   * @param {number?} [a=1] - The parameter `a` in the constructor function represents the alpha value of the
+   * color, which determines the opacity. It is optional and defaults to 1 if not provided.
    */
   constructor(r, g, b, a = 1) {
     this.r = r;
@@ -57,11 +26,24 @@ class UColor {
     this.colorsArray = [r, g, b];
   }
 
-  // coverts string into UColor instance  --- DONE !!!
+
   /**
    *
    * @param {string} hexStr
    * @returns
+   */
+
+
+  /**
+   * The function `fromHexCode` converts a hexadecimal color code to an array of RGBA values.
+   * @param {string} hexStr - The `hexStr` parameter in the `fromHexCode` function is a hexadecimal color code
+   * represented as a string. It may start with a "#" symbol followed by six hexadecimal characters
+   * representing the RGB values of a color. For example, "#FFA500" represents the color orange.
+   * @returns {UColor}The function `fromHexCode` is returning a new instance of `UColor` class with parsed
+   * values from the input hexadecimal string `hexStr`. The parsed values are obtained by converting
+   * each pair of characters in the hexadecimal string to their decimal equivalent using base 16. If
+   * the fourth parsed value exists, it is then normalized to a range between 0 and 1 by dividing it by
+   * 255
    */
   static fromHexCode(hexStr) {
     const cleanedHexStr = hexStr.slice(1);
@@ -81,7 +63,7 @@ class UColor {
     return new UColor(...parsedCouples);
   }
 
-  //  --- DONE !!!
+
   /**
    * The function `random` generates a random color with an optional alpha value.
    * @param {number} alpha - The `alpha` parameter in the `random` function is used to specify the alpha
@@ -97,7 +79,7 @@ class UColor {
     return new UColor(...colors);
   }
 
-  // -- DONE !!!
+
   /**
    * The function `fromRGB` takes a string in the format `rgba(r,g,b,a)` and returns a new `UColor`
    * object with the corresponding color values.
@@ -106,26 +88,29 @@ class UColor {
    * @returns {UColor} An instance of the `UColor` class with the RGB values extracted from the `RGBStr` string.
    */
   static fromRGB(RGBStr) {
-    // rgba(255,61,12,0.5)')
     const splittedArray = RGBStr.split("(");
     const colorArraysStr = splittedArray[1].split(")")[0].split(",");
     const colorsArrayInt = colorArraysStr.map((color) => parseFloat(color));
     return new UColor(...colorsArrayInt);
   }
 
-  // string --- DONE !!!
+
+/**
+ * The `toHex` function converts RGBA values to a hexadecimal color code.
+ * @returns The `toHex()` method is returning a hexadecimal representation of the color values (red,
+ * green, blue, alpha) in the format `#RRGGBBAA`, where RR represents the red value, GG represents the
+ * green value, BB represents the blue value, and AA represents the alpha value.
+ */
   toHex() {
     const r = this.r.toString(16).padStart(2, "0");
     const g = this.g.toString(16).padStart(2, "0");
     const b = this.b.toString(16).padStart(2, "0");
-    // prima 0 - 1 a 0 - 255 e poi base 16
     const a = Math.round(this.a * 255)
       .toString(16)
       .padStart(2, "0");
     return `#${r}${g}${b}${a}`;
   }
 
-  // string  --- DONE !!!
   /**
    * The `toRGB()` function returns the RGBA color values in a string format.
    * @returns {string} The `toRGB()` method is returning a string in the format `rgba(r, b, g, a)` where `r`,
@@ -136,7 +121,7 @@ class UColor {
     return `rgba(${this.r},${this.b},${this.g}, ${this.a})`;
   }
 
-  // -- DONE !!!
+
   /**
    * The function `getGrayColor` calculates the grayscale value of a color based on its RGB values.
    * @returns {UColor} A new `UColor` object is being returned with the RGB values converted to a grayscale
@@ -157,6 +142,14 @@ class UColor {
   }
 
 
+  /**
+   * The function `getPalette` generates a color palette based on the input colors by adjusting the hue
+   * values.
+   * @returns The `getPalette()` function returns an array called `Palette` containing three UColor
+   * objects. The first UColor object is created using the initial colorsArray, and the next two UColor
+   * objects are created by modifying the hue value of the initial color and converting it to RGB using
+   * the hslToRgb function.
+   */
   getPalette() {
     const hslVersion = rgbToHsl(...this.colorsArray);
     const hue = hslVersion[0];
@@ -171,7 +164,7 @@ class UColor {
       const newColor  = hslToRgb(...newHsl)
       Palette.push(new UColor(...newColor))
     }
-    // const newHue = (hue + 120) % 360;
+    
 
     return Palette
   }
@@ -199,32 +192,3 @@ class UColor {
   }
 
 }
-
-const bohColor = UColor.fromHexCode("#ff3400");
-console.log(bohColor);
-
-// const uColor1 = new UColor()
-// const uColor2 = UColor.fromHexCode('#ff3400')
-// const uColor3 = UColor.random()
-// console.log(uColor3)
-// const uColor4 = UColor.fromRGB('rgba(255,61,12,0.5)')
-// const uColor4Hex = UColor.
-// #ff3d0c80
-// const uColor4 = UColor.fromRGB('rgba(5,21,12,0.98)')
-// console.log(uColor4.toRGB())
-// const uColor5 = UColor.fromRGB('rgb(255,61,12)')
-// const uColor6=  UColor.fromRGB('rgb(12, 255, 89)')
-// console.log(uColor4.toHex())
-// const uColor7 = uColor4.getGrayColor()
-// console.log(uColor7.toRGB());
-
-// console.log(uColor2.toHex()) // #ff3400
-// console.log(uColor2.toHex()) // rgba(255,52,0,1)
-// console.log(uColor2.getContrastColor())
-// console.log(uColor2.getPalette())
-// rgb(255, 10, 177)
-
-const greenColor = new UColor(12, 255, 89)
-const contrastedGreenColor = greenColor.getContrastColor()
-console.log(greenColor)
-console.log(contrastedGreenColor)

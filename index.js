@@ -62,7 +62,7 @@ class UColor {
     return new UColor(...colors)
   }
 
-
+  // -- DONE !!!
   /**
    * The function `fromRGB` takes a string in the format `rgba(r,g,b,a)` and returns a new `UColor`
    * object with the corresponding color values.
@@ -79,8 +79,6 @@ class UColor {
   }
 
   // string --- DONE !!!
-
-
   toHex() {
     const r = this.r.toString(16).padStart(2, '0');
     const g = this.g.toString(16).padStart(2, '0');
@@ -101,6 +99,7 @@ class UColor {
     return `rgba(${this.r},${this.b},${this.g}, ${this.a})`
   }
 
+  // -- DONE !!!
   /**
    * The function `getGrayColor` calculates the grayscale value of a color based on its RGB values.
    * @returns {UColor} A new `UColor` object is being returned with the RGB values converted to a grayscale
@@ -122,7 +121,12 @@ class UColor {
 
   getPalette() {}
 
-  getContrastColor() {}
+  getContrastColor() {
+    // const contrastedR = 255 -
+    // const contrastedG = 255 -
+    // const contrastedB = 255 -
+
+  }
 
 }
 

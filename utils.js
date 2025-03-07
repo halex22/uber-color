@@ -17,12 +17,3 @@ export const rgbToHsl = (r, g, b) => {
     (100 * (2 * l - s)) / 2,
   ];
 };
-
-// for (let index = 0; index < 1000; index++) {
-//   const alpha = randomAlpha()
-//   if (alpha === 0) console.log('found')
-  
-// }
-
-
-console.log(rgbToHsl(255,61,12))

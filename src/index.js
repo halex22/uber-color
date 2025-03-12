@@ -148,7 +148,7 @@ export default class UColor {
     const hue = hslVersion[0];
     const s = hslVersion[1];
     const l = hslVersion[2];
-    const Palette = [new UColor(this.colorsArray)]
+    const Palette = [new UColor(...this.colorsArray)]
     const movements = 120
 
     for (let i = 0; i < 2; i++) {

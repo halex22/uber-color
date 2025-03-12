@@ -1,6 +1,6 @@
 {
   "name": "@acca-alex-22/uber-color",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Uber Color uses a Class named UColor to generate color palettes, contract colors, grayScale from a rgb color",
   "main": "index.js",
   "scripts": {
